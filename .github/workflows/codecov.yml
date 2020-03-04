@@ -1,0 +1,27 @@
+name: CodeCov
+on: [push, pull_request]
+jobs:
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13.x
+
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Get dependencies
+        run: go mod tidy
+
+      - name: Test
+        run: go test -v . -race -coverprofile=coverage.txt -covermode=atomic
+
+      - name: Upload coverage to CodeCov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+          file: ./coverage.txt
+          yml: ./.codecov.yml
