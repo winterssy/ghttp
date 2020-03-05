@@ -12,6 +12,10 @@ const (
 	defaultRetryMaxAttempts = 3
 )
 
+var (
+	defaultRetryBackoff = NewExponentialBackoff(1*time.Second, 30*time.Second, true)
+)
+
 type (
 	retrier struct {
 		maxAttempts int
@@ -26,7 +30,7 @@ type (
 func defaultRetrier() *retrier {
 	return &retrier{
 		maxAttempts: defaultRetryMaxAttempts,
-		backoff:     NewExponentialBackoff(1*time.Second, 30*time.Second, true),
+		backoff:     defaultRetryBackoff,
 	}
 }
 
