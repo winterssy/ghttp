@@ -22,6 +22,8 @@ github.com/winterssy/bufferpool v0.0.0-20200229012952-527e7777fcd3 h1:hNn8ALenX7
 github.com/winterssy/bufferpool v0.0.0-20200229012952-527e7777fcd3/go.mod h1:Ys+2xIWb2KNMf2jI1xTlebh5Fblja7LyxlhU2xWfbPU=
 github.com/winterssy/gjson v0.0.0-20200303165818-ba395c113d1f h1:MT4aq94hz9I3VgZfh2wDNknKN5HkNuJ84dtvPUDPXYQ=
 github.com/winterssy/gjson v0.0.0-20200303165818-ba395c113d1f/go.mod h1:Hq+tE5rN41nrDvD925cOO3YVjwFixLcs/CDUcULGpKQ=
+github.com/winterssy/gjson v0.0.0-20200306020332-1f68efaec187 h1:NuUeupnBUlIDdH4du0pa+XvbQFiUZ9Vk/UvkUBPxAJI=
+github.com/winterssy/gjson v0.0.0-20200306020332-1f68efaec187/go.mod h1:Hq+tE5rN41nrDvD925cOO3YVjwFixLcs/CDUcULGpKQ=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/net v0.0.0-20191009170851-d66e71096ffb h1:TR699M2v0qoKTOHxeLgp6zPqaQNs74f01a/ob9W0qko=
 golang.org/x/net v0.0.0-20191009170851-d66e71096ffb/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
