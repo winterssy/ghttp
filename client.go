@@ -277,7 +277,6 @@ func (c *Client) doWithRetry(req *Request) (*Response, error) {
 		}
 
 		if req.retrier == nil || !req.retrier.on(req.Context(), attemptNum, resp, err) {
-			c.CloseIdleConnections()
 			return resp, err
 		}
 
@@ -294,7 +293,6 @@ func (c *Client) doWithRetry(req *Request) (*Response, error) {
 		select {
 		case <-time.After(sleep):
 		case <-req.Context().Done():
-			c.CloseIdleConnections()
 			return resp, req.Context().Err()
 		}
 	}
