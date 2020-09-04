@@ -1,17 +1,17 @@
 package ghttp_test
 
 import (
-	"context"
 	"crypto/tls"
 	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
+	"net/http/httptest"
 	neturl "net/url"
 	"os"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/winterssy/ghttp"
 	"golang.org/x/text/encoding/simplifiedchinese"
@@ -72,11 +72,16 @@ func Example_requestsStyleAPI() {
 }
 
 func ExampleNoRedirect() {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "https://www.google.com", http.StatusFound)
+	}))
+	defer ts.Close()
+
 	client := ghttp.New()
 	client.CheckRedirect = ghttp.NoRedirect
 
 	resp, err := client.
-		Get("https://httpbin.org/redirect/3")
+		Get(ts.URL)
 	if err != nil {
 		log.Print(err)
 		return
@@ -88,25 +93,26 @@ func ExampleNoRedirect() {
 }
 
 func ExampleMaxRedirects() {
+	var counter int
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, r.URL.String(), http.StatusFound)
+		counter++
+	}))
+	defer ts.Close()
+
 	client := ghttp.New()
 	client.CheckRedirect = ghttp.MaxRedirects(3)
 
-	resp, err := client.Get("https://httpbin.org/redirect/1")
+	resp, err := client.Get(ts.URL)
 	if err != nil {
 		log.Print(err)
 		return
 	}
-	fmt.Println(resp.StatusCode)
 
-	resp, err = client.Get("https://httpbin.org/redirect/5")
-	if err != nil {
-		log.Print(err)
-		return
-	}
+	fmt.Println(counter)
 	fmt.Println(resp.StatusCode)
-
 	// Output:
-	// 200
+	// 3
 	// 302
 }
 
@@ -667,20 +673,6 @@ func ExampleWithFiles() {
 	// Output:
 	// testfile1.txt
 	// testfile2.txt
-}
-
-func ExampleWithContext() {
-	client := ghttp.New()
-
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-	_, err := client.
-		Get("https://httpbin.org/delay/10",
-			ghttp.WithContext(ctx),
-		)
-	fmt.Println(err)
-	// Output:
-	// Get https://httpbin.org/delay/10: context deadline exceeded
 }
 
 func ExampleEnableRetry() {
