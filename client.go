@@ -200,7 +200,7 @@ func (c *Client) Post(url string, hooks ...RequestHook) (*Response, error) {
 
 // Put makes a PUT HTTP request.
 func (c *Client) Put(url string, hooks ...RequestHook) (*Response, error) {
-	return DefaultClient.Send(MethodPut, url, hooks...)
+	return c.Send(MethodPut, url, hooks...)
 }
 
 // Patch makes a PATCH HTTP request.
