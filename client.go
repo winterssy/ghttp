@@ -16,10 +16,6 @@ import (
 	"golang.org/x/time/rate"
 )
 
-const (
-	defaultTimeout = 120 * time.Second
-)
-
 var (
 	// DefaultClient is a global Client used by the global methods such as Get, Post, etc.
 	DefaultClient = New()
@@ -57,7 +53,6 @@ func New() *Client {
 	client := &http.Client{
 		Transport: DefaultTransport(),
 		Jar:       jar,
-		Timeout:   defaultTimeout,
 	}
 	return &Client{
 		Client: client,

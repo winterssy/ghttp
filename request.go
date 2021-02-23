@@ -199,8 +199,8 @@ func (req *Request) SetContext(ctx context.Context) {
 	req.Request = req.WithContext(ctx)
 }
 
-// EnableRetry enables retry for req.
-func (req *Request) EnableRetry(opts ...RetryOption) {
+// EnableRetrier enables retrier for req.
+func (req *Request) EnableRetrier(opts ...RetryOption) {
 	retrier := defaultRetrier()
 	for _, opt := range opts {
 		opt(retrier)
@@ -208,7 +208,7 @@ func (req *Request) EnableRetry(opts ...RetryOption) {
 	req.retrier = retrier
 }
 
-// EnableClientTrace enables client trace for req using httptrace.ClientTrace.
+// WithClientTrace enables client trace for req using httptrace.ClientTrace.
 func (req *Request) EnableClientTrace() {
 	req.clientTrace = true
 }
@@ -347,16 +347,16 @@ func WithContext(ctx context.Context) RequestHook {
 	}
 }
 
-// EnableRetry is a request hook to enable retry.
-func EnableRetry(opts ...RetryOption) RequestHook {
+// WithRetrier is a request hook to enable retrier.
+func WithRetrier(opts ...RetryOption) RequestHook {
 	return func(req *Request) error {
-		req.EnableRetry(opts...)
+		req.EnableRetrier(opts...)
 		return nil
 	}
 }
 
-// EnableClientTrace is a request hook to enable client trace.
-func EnableClientTrace() RequestHook {
+// WithClientTrace is a request hook to enable client trace.
+func WithClientTrace() RequestHook {
 	return func(req *Request) error {
 		req.EnableClientTrace()
 		return nil

@@ -675,12 +675,12 @@ func ExampleWithFiles() {
 	// testfile2.txt
 }
 
-func ExampleEnableRetry() {
+func ExampleWithRetrier() {
 	client := ghttp.New()
 
 	resp, err := client.Post("https://api.example.com/login",
 		ghttp.WithBasicAuth("user", "p@ssw$"),
-		ghttp.EnableRetry(
+		ghttp.WithRetrier(
 			ghttp.WithRetryMaxAttempts(5),
 		),
 	)
@@ -691,12 +691,12 @@ func ExampleEnableRetry() {
 	fmt.Println(resp.StatusCode)
 }
 
-func ExampleEnableClientTrace() {
+func ExampleWithClientTrace() {
 	client := ghttp.New()
 
 	resp, _ := client.
 		Get("https://httpbin.org/get",
-			ghttp.EnableClientTrace(),
+			ghttp.WithClientTrace(),
 		)
 	fmt.Printf("%+v\n", resp.TraceInfo())
 }

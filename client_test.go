@@ -301,7 +301,7 @@ func TestClient_Do(t *testing.T) {
 			Host:       "httpbin.org",
 		},
 	}
-	dummyRequest.EnableRetry()
+	dummyRequest.EnableRetrier()
 	_, err := client.Do(dummyRequest)
 	assert.Equal(t, errAccessDummyBody, err)
 

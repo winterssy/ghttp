@@ -260,7 +260,7 @@ func TestRequest_SetContext(t *testing.T) {
 	assert.Equal(t, ctx, dummyRequest.Context())
 }
 
-func TestRequest_EnableRetry(t *testing.T) {
+func TestRequest_EnableRetrier(t *testing.T) {
 	const (
 		dummyData = "hello world"
 		n         = 5
@@ -281,7 +281,7 @@ func TestRequest_EnableRetry(t *testing.T) {
 	resp, err := client.
 		Post(ts.URL,
 			WithText(dummyData),
-			EnableRetry(),
+			WithRetrier(),
 		)
 	if assert.NoError(t, err) {
 		assert.Equal(t, http.StatusTooManyRequests, resp.StatusCode)
@@ -290,7 +290,7 @@ func TestRequest_EnableRetry(t *testing.T) {
 
 	resp, err = client.
 		Get(ts.URL,
-			EnableRetry(
+			WithRetrier(
 				WithRetryMaxAttempts(n),
 			),
 		)
@@ -304,7 +304,7 @@ func TestRequest_EnableRetry(t *testing.T) {
 	_, err = client.
 		Get(ts.URL,
 			WithContext(ctx),
-			EnableRetry(),
+			WithRetrier(),
 		)
 	assert.Error(t, err)
 }

@@ -105,7 +105,7 @@ func TestResponse_TraceInfo(t *testing.T) {
 	client := New()
 	resp, _ := client.
 		Get("https://httpbin.org/get",
-			EnableClientTrace(),
+			WithClientTrace(),
 		)
 
 	traceInfo := resp.TraceInfo()
